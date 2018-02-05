@@ -1,0 +1,61 @@
+<div>
+  <header>
+    <h3>
+      <span class="glyphicon glyphicon-film"></span>
+      {{ movie.name }}
+    </h3>
+  </header>
+  <br />
+  <form (ngSubmit)="submit()" #movieForm="ngForm" class="editForm" novalidate>
+    <div class="form-group">
+      <label>Movie Name</label>
+      <input type="text" class="form-control" name="movieName" [(ngModel)]="movie.name" #movieName="ngModel" required>
+      <div class="alert alert-danger" [hidden]="movieName.untouched || movieName.valid">Name is required</div>
+    </div>
+    <div class="form-group">
+      <label>Genre</label>
+      <select class="form-control" [(ngModel)]="movie.genre" name="genre" required>
+        <option *ngFor="let genre of genres" [ngValue]="genre">{{genre}}</option>
+      </select>
+    </div>
+    <div class="form-group">
+        <label>Release date</label>
+        <input type="date" class="form-control" name="releaseDate" [(ngModel)]="movie.releaseDate" #releaseDate="ngModel" required>
+        <div class="alert alert-danger" [hidden]="releaseDate.untouched || releaseDate.valid">release date is required</div>
+      </div>
+    
+
+    <!-- <input type="text" class="form-control">  -->
+    <div class="form-group">
+      <label>Actor</label>
+      <select multiple class="form-control" [(ngModel)]="movie.actorIds" name="actors" required>
+        <option *ngFor="let actor of actors" [ngValue]="actor._id">{{actor.name}}</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Director</label>
+      <select class="form-control" [(ngModel)]="movie.directorId" name="director" required>
+        <option *ngFor="let director of directors" [ngValue]="director._id">{{director.name}}</option>        
+      </select>
+    </div>
+    <br />
+
+    <div *ngIf="movie">
+      <div class="alert alert-warning" *ngIf="movie._id && deleteMessageEnabled">
+        Delete movie?&nbsp;&nbsp;
+        <button class="btn btn-danger" (click)="delete($event)">Yes</button>&nbsp;&nbsp;
+        <button class="btn btn-default" (click)="deleteMessageEnabled = false">No</button>
+      </div>
+      <button class="btn btn-danger" *ngIf="movie._id && !deleteMessageEnabled" (click)="deleteMessageEnabled = true">Delete</button>&nbsp;&nbsp;
+
+      <div class="pull-right" *ngIf="!deleteMessageEnabled">
+        <button class="btn btn-default" (click)="cancel($event)">Cancel</button>&nbsp;&nbsp;
+        <button type="submit" class="btn btn-success" [disabled]="!movieForm.valid">{{ operationText }}</button>
+      </div>
+    </div>
+    <br />
+    <br />
+    <div class="alert alert-danger" *ngIf="errorMessage != null">{{ errorMessage }}</div>
+
+  </form>
+</div>

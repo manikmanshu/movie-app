@@ -1,0 +1,26 @@
+<div class="movies view indent">
+  <div class="container">
+    <header>
+      <h3>
+        <span class="glyphicon glyphicon-film"></span>
+        {{ title }}
+      </h3>
+    </header>
+    <br />
+
+    <div class="row">
+      <div class="col-md-8">
+        <div class="navbar"></div>
+        <!-- filtered text box goes here-->
+      </div>
+      <div class="col-md-4">
+        <a class="btn btn-default" [routerLink]="['/movie', '0']">Add New Movie</a>
+      </div>
+    </div>
+    <movies-grid [movies]="filteredMovies"></movies-grid>
+
+    <pagination [totalItems]="totalRecords" 
+            [pageSize]="pageSize" 
+            (pageChanged)="pageChanged($event)"></pagination>
+  </div>
+</div>
