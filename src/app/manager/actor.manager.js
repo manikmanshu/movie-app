@@ -27,6 +27,18 @@ var getActor = (id, callback) => {
         });
 }
 
+var getActorsWithGivenIds = (ids, callback) => {
+    Actor.find({ _id: { $in: ids } })
+        .then((actors) => {
+            if (!actors) {
+                return callback({ status: 404 });
+            }
+            callback(null, { actors });
+        }
+        ).catch((e) => {
+            return callback({ errer: e, status: 400 });
+        });
+}
 var addActor = (body, callback) => {
     var actor = new Actor(body);
 
@@ -68,4 +80,11 @@ var updateActor = (id, body, callback) => {
         });
 }
 
-module.exports = { getActors, getActor, addActor, removeActor, updateActor };
+module.exports = {
+    getActors,
+    getActor,
+    addActor,
+    removeActor,
+    updateActor,
+    getActorsWithGivenIds
+};

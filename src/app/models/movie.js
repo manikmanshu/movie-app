@@ -9,8 +9,10 @@ var Movie = mongoose.model('Movie', {
     imageUrl: { type: String, default: "image.png" },
     releaseDate: { type: Date },
     genre: { type: String },
-    actor: [Actor.schema],
-    director: { type: Director.schema, required: true }
+    actors: { type: [Actor.schema], required: true },
+    actorIds: [],
+    directorId: { type: String, required: true },
+    director: Director.schema
 });
 
 module.exports = { Movie };
