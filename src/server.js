@@ -1,18 +1,19 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const { mongoose } = require('./db/mongoose');
 const path = require('path');
+const logger = require('./common/logger');
 
 const app = express();
 const port = process.env.PORT || 8000;
 
+require('./db/mongoose');
 function initExpressMiddleWare() {
     app.use(express.static(path.join(__dirname, 'public')));
     app.use(bodyParser.json());
 }
 
 function initRoutes() {
-    require('./app/routes/router')(app);
+    require('./router/routes')(app);
     app.all('/*', (req, res) => {
         res.sendFile(__dirname + '/public/index.html');
     });
@@ -21,7 +22,7 @@ function initRoutes() {
 
 function start() {
     app.listen(port, () => {
-        console.log(`We are live on port ${port}`);
+        logger.info(`We are live on port ${port}`);
     })
 }
 
