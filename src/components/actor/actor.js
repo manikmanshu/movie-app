@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-var Actor = mongoose.model('Actor', {
+const Actor = mongoose.model('Actor', {
     name: { type: String, required: true, trim: true }
 });
 

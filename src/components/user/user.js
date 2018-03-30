@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const _ = require('lodash');
 const bcrypt = require('bcryptjs');
 
-var UserSchema = new mongoose.Schema({
+const UserSchema = new mongoose.Schema({
     email: {
         type: String,
         required: true,
@@ -33,26 +33,24 @@ var UserSchema = new mongoose.Schema({
     }]
 });
 
+// Override user json object
 UserSchema.methods.toJSON = function () {
     return _.pick(this.toObject(), ['email', '_id']);
 };
 
+// Generate authentication token
 UserSchema.methods.generateAuthToken = function () {
-    var user = this;
-    var access = 'auth';
-    var token = jwt.sign({ _id: user._id.toHexString(), access }, 'abc123').toString();
-    user.tokens.push({
-        access,
-        token
-    });
+    const user = this;
+    const access = 'auth';
+    const token = jwt.sign({ _id: user._id.toHexString(), access }, 'abc123').toString();
+    user.tokens.push({ access, token });
 
-    return user.save().then(() => {
-        return token;
-    });
+    return user.save().then(() => token);
 };
 
+// Remove authenticated user token
 UserSchema.methods.removeToken = function (token) {
-    var user = this;
+    const user = this;
     return user.update({
         $pull: {
             tokens: {
@@ -62,9 +60,10 @@ UserSchema.methods.removeToken = function (token) {
     });
 };
 
+// Find User by token
 UserSchema.statics.findByToken = function (token) {
     // methods on User model
-    var decoded;
+    let decoded;
     try {
         decoded = jwt.verify(token, 'abc123');
     } catch (e) {
@@ -78,6 +77,7 @@ UserSchema.statics.findByToken = function (token) {
     });
 };
 
+// Find user with email and password
 UserSchema.statics.findByCredentials = function (email, password) {
     return this.findOne({ email })
         .then((user) => {
@@ -96,6 +96,7 @@ UserSchema.statics.findByCredentials = function (email, password) {
         });
 };
 
+// perform hashing on user password
 UserSchema.pre('save', function (next) {
     var user = this;
     if (user.isModified('password')) {
@@ -109,6 +110,7 @@ UserSchema.pre('save', function (next) {
         next();
     }
 });
-var User = mongoose.model('User', UserSchema);
+
+const User = mongoose.model('User', UserSchema);
 
 module.exports = { User };

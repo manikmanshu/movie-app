@@ -2,21 +2,28 @@ const movieManager = require('./movie.manager');
 const directorManager = require('../director/director.manager');
 const actorManager = require('../actor/actor.manager');
 const _ = require('lodash');
+const logger = require('../../common/logger');
 
+// Get Movies
 function getMovies(req, res) {
+    logger.info('Get /movies');
     movieManager.getMovies((err, data) => {
         if (err) {
+            logger.error('Error in fetching movies');
             res.status(err.status).send(err.error);
         } else {
+            logger.info('Get /movies completed');
             res.send(data);
         }
     });
 }
 
+// Get a movie
 function getMovie(req, res) {
-    var id = req.params.id;
-    movieManager.getMovie(id, (err, data) => {
+    logger.info('Get /movies/:id');
+    movieManager.getMovie(req.params.id, (err, data) => {
         if (err) {
+            logger.error('Error in fetching movie');
             res.status(err.status).send(err.error);
         } else {
             res.send(data);
@@ -24,13 +31,17 @@ function getMovie(req, res) {
     });
 }
 
+// Get movies with pagination
 function getPagedMovies(req, res) {
-    var skipVal = parseInt(req.params.skip, 10);
-    var topVal = parseInt(req.params.top, 10);
-    var skip = isNaN(skipVal) ? 10 : skipVal;
-    var top = isNaN(topVal) ? 0 : topVal;
+    const skipVal = parseInt(req.params.skip, 10);
+    const topVal = parseInt(req.params.top, 10);
+    const skip = isNaN(skipVal) ? 10 : skipVal;
+    const top = isNaN(topVal) ? 0 : topVal;
+
+    logger.info('Get /movies with pagination');
     movieManager.getPagedMovies(skip, top, (err, data) => {
         if (err) {
+            logger.error('Error in fetching movies');
             res.status(err.status).send(err.error);
         } else {
             res.send(data);
@@ -38,16 +49,20 @@ function getPagedMovies(req, res) {
     });
 }
 
+// Add movie
 function addMovie(req, res) {
+    logger.info('Add a movie');
     directorManager.getDirector(req.body.directorId, (err, directorData) => {
         if (err) {
+            logger.error('Error in fetching director');
             res.status(err.status).send(err.error);
         } else {
             actorManager.getActorsWithGivenIds(req.body.actorIds, (err, actorsData) => {
                 if (err) {
+                    logger.error('Error in fetching actor');
                     res.status(err.status).send(err.error);
                 } else {
-                    var movie = {
+                    const movie = {
                         name: req.body.name,
                         genre: req.body.genre,
                         imageUrl: req.body.imageUrl,
@@ -62,6 +77,7 @@ function addMovie(req, res) {
                     };
                     movieManager.addMovie(movie, (err, data) => {
                         if (err) {
+                            logger.error('Error in adding movie');
                             res.status(err.status).send(err.error);
                         } else {
                             res.send(data);
@@ -73,9 +89,10 @@ function addMovie(req, res) {
     });
 }
 
+// Remove a movie
 function removeMovie(req, res) {
-    var id = req.params.id;
-    movieManager.removeMovie(id, (err, data) => {
+    logger.info('Remove a /movies');
+    movieManager.removeMovie(req.params.id, (err, data) => {
         if (err) {
             res.status(err.status).send(err.error);
         } else {
@@ -85,7 +102,7 @@ function removeMovie(req, res) {
 }
 
 function updateMovie(req, res) {
-    var id = req.params.id;
+    logger.info('Update a movie');
     directorManager.getDirector(req.body.directorId, (err, directorData) => {
         if (err) {
             res.status(err.status).send(err.error);
@@ -94,7 +111,7 @@ function updateMovie(req, res) {
                 if (err) {
                     res.status(err.status).send(err.error);
                 } else {
-                    var movie = {
+                    const movie = {
                         name: req.body.name,
                         genre: req.body.genre,
                         imageUrl: req.body.imageUrl,
@@ -107,7 +124,7 @@ function updateMovie(req, res) {
                             name: directorData.director.name
                         }
                     };
-                    movieManager.updateMovie(id, movie, (err, data) => {
+                    movieManager.updateMovie(req.params.id, movie, (err, data) => {
                         if (err) {
                             res.status(err.status).send(err.error);
                         } else {

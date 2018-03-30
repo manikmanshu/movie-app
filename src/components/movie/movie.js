@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const { Actor } = require('../actor/actor');
 const { Director } = require('../director/director');
 
-var MovieSchema = new mongoose.Schema({
+const MovieSchema = new mongoose.Schema({
     name: { type: String, required: true, minlength: 2, trim: true },
     imageUrl: { type: String, default: 'image.png' },
     releaseDate: { type: Date },
@@ -13,6 +13,6 @@ var MovieSchema = new mongoose.Schema({
     director: Director.schema
 });
 
-var Movie = mongoose.model('Movie', MovieSchema);
+const Movie = mongoose.model('Movie', MovieSchema);
 
 module.exports = { Movie };
