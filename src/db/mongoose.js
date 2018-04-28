@@ -1,4 +1,6 @@
-var mongoose = require('mongoose');
+'use strict';
+
+const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017';

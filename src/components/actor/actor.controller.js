@@ -1,3 +1,5 @@
+'use strict';
+
 const actorManager = require('./actor.manager');
 const logger = require('../../common/logger');
 

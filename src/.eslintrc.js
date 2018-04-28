@@ -6,5 +6,19 @@ module.exports = {
     "env": {
         "node": true,
         "es6": true
-    }
+    },
+    "rules": {
+        "quotes": [
+            "error",
+            "single"
+        ],
+        "semi": [
+            "error",
+            "always"
+        ],
+        "strict": [
+            "error",
+            "global"
+        ]
+    } 
 };

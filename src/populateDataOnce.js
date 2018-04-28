@@ -1,16 +1,18 @@
-var { Actor } = require('./app/models/actor');
-var { Director } = require('./app/models/director');
+'use strict';
+const { Actor } = require('./app/models/actor');
+const { Director } = require('./app/models/director');
 
-var { persons, personType } = require('./data/persons');
+const { persons, personType } = require('./data/persons');
 const { mongoose } = require('./db/mongoose');
+const logger = require('./common/logger');
 
-console.log('Clearing existing db data....');
+logger.info('Clearing existing db data....');
 Actor.remove({}).then(() => {
-    console.log('Done clearing actor db data.');
+    logger.info('Done clearing actor db data.');
     return Director.remove({});
-}).then((done) => {
-    console.log('Done clearing director db data.');
-    console.log('Done clearing existing db data.');
+}).then(() => {
+    logger.info('Done clearing director db data.');
+    logger.info('Done clearing existing db data.');
     populateAgain();
     setTimeout(() => {
         mongoose.connection.close();
@@ -19,9 +21,9 @@ Actor.remove({}).then(() => {
 
 
 function populateAgain() {
-    console.log('Populate new db data....');
+    logger.info('Populate new db data....');
     persons.forEach((person) => {
-        var actor, director;
+        let actor, director;
         switch (person.personType) {
             case personType.actor:
                 actor = new Actor({ name: person.name });
@@ -40,7 +42,7 @@ function populateAgain() {
                 break;
         }
     });
-    console.log('Done populating new db data.');
+    logger.info('Done populating new db data.');
 
-    console.log('Data is populated close connection now');
+    logger.info('Data is populated close connection now');
 }

@@ -1,3 +1,5 @@
+'use strict';
+
 const mongoose = require('mongoose');
 const validator = require('validator');
 const jwt = require('jsonwebtoken');
@@ -98,7 +100,7 @@ UserSchema.statics.findByCredentials = function (email, password) {
 
 // perform hashing on user password
 UserSchema.pre('save', function (next) {
-    var user = this;
+    let user = this;
     if (user.isModified('password')) {
         bcrypt.genSalt(10, (err, salt) => {
             bcrypt.hash(user.password, salt, (err, hash) => {

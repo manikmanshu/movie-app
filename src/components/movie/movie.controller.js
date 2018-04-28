@@ -1,3 +1,5 @@
+'use strict';
+
 const movieManager = require('./movie.manager');
 const directorManager = require('../director/director.manager');
 const actorManager = require('../actor/actor.manager');

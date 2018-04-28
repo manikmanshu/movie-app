@@ -1,3 +1,5 @@
+'use strict';
+
 const actorController = require('./actor.controller');
 
 module.exports = function (app) {

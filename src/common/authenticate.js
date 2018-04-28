@@ -1,3 +1,4 @@
+'use strict';
 const { User } = require('../components/user/user');
 
 const authenticate = (req, res, next) => {

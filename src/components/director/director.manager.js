@@ -1,3 +1,5 @@
+'use strict';
+
 const { Director } = require('../director/director');
 const { ObjectID } = require('mongodb');
 const logger = require('../../common/logger');

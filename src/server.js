@@ -1,3 +1,5 @@
+'use strict';
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
@@ -33,7 +35,7 @@ function initRoutes() {
 function start() {
     app.listen(port, () => {
         logger.info(`We are live on port ${port}`);
-    })
+    });
 }
 
 initExpressMiddleWare();

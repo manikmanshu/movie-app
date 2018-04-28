@@ -1,3 +1,5 @@
+'use strict';
+
 const mongoose = require('mongoose');
 const { Actor } = require('../actor/actor');
 const { Director } = require('../director/director');

@@ -1,3 +1,5 @@
+'use strict';
+
 const directorController = require('./director.controller');
 
 module.exports = function (app) {

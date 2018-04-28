@@ -1,3 +1,5 @@
+'use strict';
+
 const directorManager = require('./director.manager');
 const logger = require('../../common/logger');
 

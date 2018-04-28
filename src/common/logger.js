@@ -7,17 +7,17 @@
  */
 
 'use strict';
-var winston = require('winston');
-var fileName = __dirname + "/../logs/myLogs.log";
+const winston = require('winston');
+const fileName = __dirname + '/../logs/myLogs.log';
 // Set Default logging level
-var defaultLevel = 'info';
+const defaultLevel = 'info';
 
 
 /**
  * transport supporting Console, File and AzureLogger to logger
  * Remove any transports item if not required
  */
-var logger = new (winston.Logger)({
+let logger = new (winston.Logger)({
     transports: [
         new (winston.transports.Console)(),
         new (winston.transports.File)({

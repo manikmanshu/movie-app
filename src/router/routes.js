@@ -1,3 +1,5 @@
+'use strict';
+
 const movieRoutes = require('../components/movie/movie.routes');
 const actorRoutes = require('../components/actor/actor.routes');
 const directorRoutes = require('../components/director/director.routes');
@@ -11,7 +13,7 @@ module.exports = function (app) {
     userRoutes(app);
 
     app.get('/genres', (req, res) => {
-        var genres = Object.keys(genre).map(function (key) { return genre[key]; });
+        let genres = Object.keys(genre).map(function (key) { return genre[key]; });
         res.status(200).send(genres);
     });
 };

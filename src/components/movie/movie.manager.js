@@ -1,3 +1,5 @@
+'use strict';
+
 const { Movie } = require('./movie');
 const { ObjectID } = require('mongodb');
 const logger = require('../../common/logger');

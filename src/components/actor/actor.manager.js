@@ -1,3 +1,5 @@
+'use strict';
+
 const { Actor } = require('./actor');
 const { ObjectID } = require('mongodb');
 const logger = require('../../common/logger');

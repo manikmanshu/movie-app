@@ -1,3 +1,5 @@
+'use strict';
+
 const movieController = require('./movie.controller');
 
 module.exports = function (app) {

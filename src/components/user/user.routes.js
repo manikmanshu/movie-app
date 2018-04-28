@@ -1,5 +1,7 @@
+'use strict';
+
 const userController = require('./user.controller');
-var { authenticate } = require('../../common/authenticate');
+const { authenticate } = require('../../common/authenticate');
 
 module.exports = function (app) {
     app.post('/api/users', userController.addUser);
